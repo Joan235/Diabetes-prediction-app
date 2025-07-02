@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diabetes Type Prediction</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="min-h-screen bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100">
+    <div class="w-full min-h-screen flex flex-col justify-center items-center">
+        <div class="w-full max-w-lg bg-white/80 rounded-3xl shadow-2xl p-8 mt-8 mb-8 border-4 border-blue-200 relative overflow-hidden">
+            <div class="absolute -top-8 -left-8 text-blue-200 opacity-30 text-8xl pointer-events-none select-none">
+                <i class="fa-solid fa-heart-pulse"></i>
+            </div>
+            <div class="absolute -bottom-8 -right-8 text-pink-200 opacity-30 text-8xl pointer-events-none select-none">
+                <i class="fa-solid fa-stethoscope"></i>
+            </div>
+            <h1 class="text-4xl font-extrabold mb-6 text-center text-blue-600 drop-shadow flex items-center justify-center gap-3">
+                <i class="fa-solid fa-notes-medical"></i> Diabetes Type Prediction
+            </h1>
+            <form method="POST" action="/predict_type" class="space-y-5">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label for="gender" class="block text-sm font-semibold text-blue-700 mb-1"><i class="fa-solid fa-venus-mars"></i> Gender</label>
+                        <select id="gender" name="gender" required class="block w-full p-2 border border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-300">
+                            <option value="">Select Gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="age" class="block text-sm font-semibold text-blue-700 mb-1"><i class="fa-solid fa-user-clock"></i> Age</label>
+                        <select id="age" name="age" required class="block w-full p-2 border border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-300">
+                            <option value="">Select Age Range</option>
+                            <option value="[0-10)">[0-10)</option>
+                            <option value="[10-20)">[10-20)</option>
+                            <option value="[20-30)">[20-30)</option>
+                            <option value="[30-40)">[30-40)</option>
+                            <option value="[40-50)">[40-50)</option>
+                            <option value="[50-60)">[50-60)</option>
+                            <option value="[60-70)">[60-70)</option>
+                            <option value="[70-80)">[70-80)</option>
+                            <option value="[80-90)">[80-90)</option>
+                            <option value="[90-100)">[90-100)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="time_in_hospital" class="block text-sm font-semibold text-blue-700 mb-1"><i class="fa-solid fa-hospital-user"></i> Time in Hospital (days)</label>
+                        <input type="number" id="time_in_hospital" name="time_in_hospital" min="0" required class="block w-full p-2 border border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-300">
+                    </div>
+                    <div>
+                        <label for="num_medications" class="block text-sm font-semibold text-blue-700 mb-1"><i class="fa-solid fa-pills"></i> Number of Medications</label>
+                        <input type="number" id="num_medications" name="num_medications" min="0" required class="block w-full p-2 border border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-300">
+                    </div>
+                    <div>
+                        <label for="num_outpatient" class="block text-sm font-semibold text-blue-700 mb-1"><i class="fa-solid fa-user-doctor"></i> Outpatient Visits</label>
+                        <input type="number" id="num_outpatient" name="num_outpatient" min="0" required class="block w-full p-2 border border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-300">
+                    </div>
+                    <div>
+                        <label for="num_emergency" class="block text-sm font-semibold text-blue-700 mb-1"><i class="fa-solid fa-truck-medical"></i> Emergency Visits</label>
+                        <input type="number" id="num_emergency" name="num_emergency" min="0" required class="block w-full p-2 border border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-300">
+                    </div>
+                    <div>
+                        <label for="num_inpatient" class="block text-sm font-semibold text-blue-700 mb-1"><i class="fa-solid fa-bed-pulse"></i> Inpatient Visits</label>
+                        <input type="number" id="num_inpatient" name="num_inpatient" min="0" required class="block w-full p-2 border border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-300">
+                    </div>
+                    <div>
+                        <label for="insulin" class="block text-sm font-semibold text-blue-700 mb-1"><i class="fa-solid fa-syringe"></i> Insulin Use</label>
+                        <select id="insulin" name="insulin" required class="block w-full p-2 border border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-300">
+                            <option value="">Select</option>
+                            <option value="Down">Down</option>
+                            <option value="No">No</option>
+                            <option value="Steady">Steady</option>
+                            <option value="Up">Up</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="a1cresult" class="block text-sm font-semibold text-blue-700 mb-1"><i class="fa-solid fa-vial"></i> A1C Result</label>
+                        <select id="a1cresult" name="a1cresult" required class="block w-full p-2 border border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-300">
+                            <option value="">Select</option>
+                            <option value=">7">&gt;7</option>
+                            <option value=">8">&gt;8</option>
+                            <option value="Norm">Norm</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="diabetesMed" class="block text-sm font-semibold text-blue-700 mb-1"><i class="fa-solid fa-capsules"></i> Diabetes Medication</label>
+                        <select id="diabetesMed" name="diabetesMed" required class="block w-full p-2 border border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-300">
+                            <option value="">Select</option>
+                            <option value="Yes">Yes</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="change" class="block text-sm font-semibold text-blue-700 mb-1"><i class="fa-solid fa-arrows-rotate"></i> Change in Medication</label>
+                        <select id="change" name="change" required class="block w-full p-2 border border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-300">
+                            <option value="">Select</option>
+                            <option value="Ch">Ch</option>
+                            <option value="No">No</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="w-full bg-gradient-to-r from-blue-400 via-pink-400 to-purple-400 hover:from-blue-500 hover:to-purple-500 text-white font-bold py-3 px-4 rounded-xl flex items-center justify-center gap-2 shadow-lg text-lg mt-2 transition-all duration-200"><i class="fa-solid fa-stethoscope"></i> Predict Type</button>
+            </form>
+            {% if result_message %}
+            <div class="mt-8 p-6 rounded-2xl flex items-center gap-4 text-lg font-semibold shadow-lg border-2
+                {% if result_class == 'type1' %} bg-blue-100 text-blue-700 border-blue-300
+                {% elif result_class == 'type2' %} bg-orange-100 text-orange-700 border-orange-300
+                {% endif %}">
+                <i class="fa-solid {{ result_icon }} text-3xl"></i>
+                <span>{{ result_message }}</span>
+            </div>
+            {% endif %}
+            <div class="explanation mt-10 bg-blue-50 rounded-xl p-4 text-blue-800 shadow flex flex-col gap-2">
+                <h3 class="flex items-center gap-2 text-lg font-bold mb-2 text-blue-600"><i class="fa-solid fa-circle-info"></i> What do the results mean?</h3>
+                <ul class="list-disc ml-6">
+                    <li><span class="font-bold text-blue-700">🔵 Type 1:</span> The patient has Type 1 diabetes (autoimmune, usually early onset).</li>
+                    <li><span class="font-bold text-orange-700">🟠 Type 2:</span> The patient has Type 2 diabetes (insulin resistance, often adult onset).</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
